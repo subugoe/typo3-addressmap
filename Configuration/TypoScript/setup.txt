@@ -1,0 +1,8 @@
+plugin.tx_addressmap {
+	settings {
+		group {
+			national = 12
+			international = 13
+		}
+	}
+}
