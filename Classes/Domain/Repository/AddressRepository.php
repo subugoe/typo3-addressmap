@@ -52,7 +52,7 @@ class AddressRepository {
 				'tt_address',
 				'tt_address_group_mm',
 				'tt_address_group',
-				'AND NOT tt_address.deleted AND NOT tt_address.hidden AND uid_foreign = ' . $category
+				'AND NOT tt_address.deleted AND NOT tt_address.hidden AND uid_foreign = ' . (int) $category
 		);
 
 		while ($row = $this->db->sql_fetch_assoc($query)) {

@@ -4,8 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "46cc52a12fbacb014cb677ac81c552fd",
-    "packages": [
+    "hash": "ce4123b5f70d3e6d1b850726bf74c28c",
+    "packages": [],
+    "packages-dev": [
         {
             "name": "egeloen/http-adapter",
             "version": "0.7.1",
@@ -289,7 +290,6 @@
             "time": "2015-04-20 09:50:36"
         }
     ],
-    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],

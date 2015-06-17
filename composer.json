@@ -8,7 +8,7 @@
             "email": "i.pfennigstorf@gmail.com"
         }
     ],
-    "require": {
+    "require-dev": {
         "willdurand/geocoder": "^3.0"
     }
 }
