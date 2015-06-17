@@ -1,0 +1,26 @@
+{namespace dz=Subugoe\Addressmap\ViewHelpers}
+<f:layout name="Main" />
+
+<f:section name="main">
+
+<script>
+var addresses = [];
+
+<f:for each="{addresses}" as="address">
+  var address = {};
+  address.title = "{address.last_name}";
+  address.latitude = "{address.latitude}";
+  address.longitude = "{address.longitude}";
+  address.address = "{address.address -> dz:multilineString()}";
+  address.zip = "{address.zip}";
+  address.city = "{address.city}";
+  addresses.push(address);
+</f:for>
+
+</script>
+
+<div id="map"></div>
+
+</f:section>
+
+

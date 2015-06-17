@@ -1,5 +1,5 @@
 <?php
-namespace Subugoe\Addressmap\Domain\Repository;
+namespace Subugoe\Addressmap\ViewHelpers;
 
 /* * *************************************************************
  *  Copyright notice
@@ -25,49 +25,17 @@ namespace Subugoe\Addressmap\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
-use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * Address repository
+ * Description
  */
-class AddressRepository {
+class MultilineStringViewHelper extends AbstractViewHelper{
 
-	/**
-	 * @var DatabaseConnection
-	 */
-	protected $db;
+	public function render() {
+		$content = $this->renderChildren();
+		return str_replace("\r\n","\\\r\n",$content);
 
-	public function __construct() {
-		$this->db = $GLOBALS['TYPO3_DB'];
-	}
-
-	/**
-	 * @param int $category
-	 * @return array
-	 */
-	public function queryDbByCategory($category) {
-		$resultSet = [];
-		$query = $this->db->exec_SELECT_mm_query(
-				'*',
-				'tt_address',
-				'tt_address_group_mm',
-				'tt_address_group',
-				'AND NOT tt_address.deleted AND NOT tt_address.hidden AND uid_foreign = ' . $category
-		);
-
-		while ($row = $this->db->sql_fetch_assoc($query)) {
-			$resultSet[] = $row;
-		}
-		return $resultSet;
-	}
-
-	/**
-	 * @param $address
-	 * @return int
-	 */
-	public function updateAddress($address) {
-		$this->db->exec_UPDATEquery('tt_address', 'uid = ' . intval($address['uid_local']), ['latitude' => $address['latitude'], 'longitude' => $address['longitude']]);
-		return $this->db->sql_affected_rows();
 	}
 
 }

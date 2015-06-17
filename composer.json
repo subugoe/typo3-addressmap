@@ -1,0 +1,14 @@
+{
+    "name": "subugoe/addressmap",
+    "license": "GPL",
+    "type": "typo3-cms-extension",
+    "authors": [
+        {
+            "name": "Ingo Pfennigstorf",
+            "email": "i.pfennigstorf@gmail.com"
+        }
+    ],
+    "require": {
+        "willdurand/geocoder": "^3.0"
+    }
+}

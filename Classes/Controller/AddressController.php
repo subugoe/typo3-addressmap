@@ -6,7 +6,7 @@ namespace Subugoe\Addressmap\Controller;
  *
  *  (c) 2015 Ingo Pfennigstorf <pfennigstorf@sub-goettingen.de>
  *      Goettingen State Library
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,6 +25,7 @@ namespace Subugoe\Addressmap\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -38,17 +39,35 @@ class AddressController extends ActionController {
 	 */
 	protected $addressRepository;
 
+	/**
+	 * @var \Subugoe\Addressmap\Service\GeoCodingService
+	 * @inject
+	 */
+	protected $geoCodingService;
 
-	public function nationalAction() {
-		$groupId = (int) $this->settings['group']['national'];
+	public function initializeAction() {
+		$this->addAssetsToHead();
+	}
+
+	public function mapAction() {
+		$groupId = (int) $this->settings['addressGroup'];
 		$addresses = $this->addressRepository->queryDbByCategory($groupId);
+
+		$addresses = $this->geoCodingService->encode($addresses);
+
 		$this->view->assign('addresses', $addresses);
 	}
 
-	public function internationalAction() {
-		$groupId = (int) $this->settings['group']['international'];
-		$addresses = $this->addressRepository->queryDbByCategory($groupId);
-		$this->view->assign('addresses', $addresses);
+	protected function addAssetsToHead() {
+		/** @var \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer */
+		$pageRenderer = $GLOBALS['TSFE']->getPageRenderer();
+
+		$pageRenderer->addCssFile(ExtensionManagementUtility::siteRelPath('addressmap') . 'Resources/Public/Css/leaflet.css');
+		$pageRenderer->addCssFile(ExtensionManagementUtility::siteRelPath('addressmap') . 'Resources/Public/Css/MarkerCluster.css');
+		$pageRenderer->addCssFile(ExtensionManagementUtility::siteRelPath('addressmap') . 'Resources/Public/Css/addressmap.css');
+		$pageRenderer->addJsFooterFile(ExtensionManagementUtility::siteRelPath('addressmap') . 'Resources/Public/JavaScript/leaflet.js');
+		$pageRenderer->addJsFooterFile(ExtensionManagementUtility::siteRelPath('addressmap') . 'Resources/Public/JavaScript/leaflet.markercluster.js');
+		$pageRenderer->addJsFooterFile(ExtensionManagementUtility::siteRelPath('addressmap') . 'Resources/Public/JavaScript/addressmap.js');
 	}
 
 }
