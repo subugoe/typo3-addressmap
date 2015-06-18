@@ -7,7 +7,9 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 var digIcon = L.icon({
-	iconUrl: '/typo3conf/ext/addressmap/Resources/Public/Images/marker-icon.png'
+	iconUrl: '/typo3conf/ext/addressmap/Resources/Public/Images/marker-icon.png',
+	iconAnchor: [12, 41],
+	popupAnchor: [0, -41]
 });
 
 var yourIcon = L.icon({
