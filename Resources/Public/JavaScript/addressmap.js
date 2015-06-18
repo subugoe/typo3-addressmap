@@ -10,8 +10,12 @@ var digIcon = L.icon({
 	iconUrl: '/typo3conf/ext/addressmap/Resources/Public/Images/marker-icon.png'
 });
 
-var markers = L.markerClusterGroup({maxClusterRadius: 40});
+var yourIcon = L.icon({
+	iconUrl: '/typo3conf/ext/addressmap/Resources/Public/Images/user.svg',
+	iconSize: [20, 20]
+});
 
+var markers = L.markerClusterGroup({maxClusterRadius: 40});
 
 var markerArray = [];
 for (i in addresses) {
@@ -23,5 +27,16 @@ for (i in addresses) {
 	}
 }
 
+var yourMarker = function () {
+	if ("geolocation" in navigator) {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			var userMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: yourIcon});
+			userMarker.bindPopup('<strong>Ihr Standort</strong>');
+			map.addLayer(userMarker);
+
+		});
+	}
+};
+yourMarker();
 map.addLayer(markers);
 map.fitBounds(markers.getBounds());
